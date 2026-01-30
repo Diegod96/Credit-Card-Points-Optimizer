@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CardStack
+
+A credit card points and cashback optimization platform that helps users maximize their rewards across multiple card ecosystems.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+
+# Set up database
+npx prisma generate
+npx prisma db push
+npm run db:seed
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run dev` - Start development server
+- `npm run build` - Production build
+- `npm run lint` - Run ESLint
+- `npm run type-check` - TypeScript check
+- `npm run format` - Format code with Prettier
+- `npm run db:push` - Push Prisma schema to database
+- `npm run db:studio` - Open Prisma Studio
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
+
+- **Frontend:** Next.js 14, React 18, TypeScript, TailwindCSS
+- **Backend:** Next.js API Routes, Prisma ORM
+- **Database:** Neon (serverless PostgreSQL)
+- **Cache:** Upstash Redis
+- **Auth:** NextAuth.js
+- **State:** React Query, Zustand
+
+## Project Structure
+
+```
+cardstack/
+├── src/
+│   ├── app/                 # Next.js App Router
+│   ├── components/          # React components
+│   ├── lib/                 # Utilities and configurations
+│   ├── hooks/               # Custom React hooks
+│   ├── stores/              # Zustand state stores
+│   └── types/               # TypeScript types
+├── prisma/                  # Database schema and migrations
+└── plans/                   # Project documentation
+```
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [NextAuth.js Documentation](https://next-auth.js.org)
