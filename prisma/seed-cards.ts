@@ -176,32 +176,42 @@ export async function seedCardProducts(): Promise<void> {
   console.log('Seeding card products...');
 
   for (const card of CARD_PRODUCTS) {
-    await prisma.cardProduct.upsert({
+    const existing = await prisma.cardProduct.findFirst({
       where: { name: card.name },
-      update: {
-        issuer: card.issuer,
-        currencyType: card.currencyType,
-        pointsCurrency: card.pointsCurrency,
-        annualFee: card.annualFee,
-        baseEarnRate: card.baseEarnRate,
-        categoryMultipliers: card.categoryMultipliers,
-        signupBonusPoints: card.signupBonusPoints,
-        signupSpendRequirement: card.signupSpendRequirement,
-        signupTimeMonths: card.signupTimeMonths,
-      },
-      create: {
-        name: card.name,
-        issuer: card.issuer,
-        currencyType: card.currencyType,
-        pointsCurrency: card.pointsCurrency,
-        annualFee: card.annualFee,
-        baseEarnRate: card.baseEarnRate,
-        categoryMultipliers: card.categoryMultipliers,
-        signupBonusPoints: card.signupBonusPoints,
-        signupSpendRequirement: card.signupSpendRequirement,
-        signupTimeMonths: card.signupTimeMonths,
-      },
     });
+
+    if (existing) {
+      await prisma.cardProduct.update({
+        where: { id: existing.id },
+        data: {
+          issuer: card.issuer,
+          currencyType: card.currencyType,
+          pointsCurrency: card.pointsCurrency,
+          annualFee: card.annualFee,
+          baseEarnRate: card.baseEarnRate,
+          categoryMultipliers: card.categoryMultipliers,
+          signupBonusPoints: card.signupBonusPoints,
+          signupSpendRequirement: card.signupSpendRequirement,
+          signupTimeMonths: card.signupTimeMonths,
+        },
+      });
+    } else {
+      await prisma.cardProduct.create({
+        data: {
+          name: card.name,
+          issuer: card.issuer,
+          currencyType: card.currencyType,
+          pointsCurrency: card.pointsCurrency,
+          annualFee: card.annualFee,
+          baseEarnRate: card.baseEarnRate,
+          categoryMultipliers: card.categoryMultipliers,
+          signupBonusPoints: card.signupBonusPoints,
+          signupSpendRequirement: card.signupSpendRequirement,
+          signupTimeMonths: card.signupTimeMonths,
+        },
+      });
+    }
+
     console.log(`Seeded: ${card.name}`);
   }
 

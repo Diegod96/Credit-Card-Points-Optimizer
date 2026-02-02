@@ -29,8 +29,12 @@ jest.mock('@/lib/prisma', () => ({
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-const mockedAuth = auth as jest.MockedFunction<typeof auth>;
-const mockedPrisma = prisma as jest.Mocked<typeof prisma>;
+const mockedAuth = auth as unknown as jest.Mock;
+const mockedPrisma = prisma as unknown as {
+  pointsBalance: { findMany: jest.Mock };
+  card: { findMany: jest.Mock };
+  pointsValuation: { findMany: jest.Mock };
+};
 
 describe('Dashboard API Endpoints', () => {
   beforeEach(() => {

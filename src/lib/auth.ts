@@ -1,3 +1,5 @@
-import { auth as nextAuth } from '@auth/nextjs';
+import NextAuth from 'next-auth';
 
-export const auth = nextAuth;
+export const { auth } = NextAuth({
+  providers: [],
+});

@@ -33,7 +33,7 @@ export async function GET() {
     });
 
     // Calculate month-over-month change (simplified - would need historical data in production)
-    const formattedBalances = balances.map((balance: PointsBalance) => {
+    const formattedBalances = balances.map((balance: typeof balances[number]) => {
       const lastMonth = new Date();
       lastMonth.setMonth(lastMonth.getMonth() - 1);
       

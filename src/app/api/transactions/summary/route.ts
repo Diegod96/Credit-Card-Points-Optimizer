@@ -17,8 +17,8 @@ interface Card {
 interface CardSummary {
   cardId: string;
   _sum: {
-    amount: number | null;
-    pointsEarned: number | null;
+    amount: Prisma.Decimal | null;
+    pointsEarned: Prisma.Decimal | null;
   };
   _count: {
     id: number;
@@ -28,8 +28,8 @@ interface CardSummary {
 interface CategorySummary {
   category: string;
   _sum: {
-    amount: number | null;
-    pointsEarned: number | null;
+    amount: Prisma.Decimal | null;
+    pointsEarned: Prisma.Decimal | null;
   };
   _count: {
     id: number;

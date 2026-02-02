@@ -1,31 +1,6 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-interface CardProduct {
-  id: string;
-  name: string;
-  issuer: string;
-  currencyType: string;
-  pointsCurrency: string | null;
-  annualFee: number;
-  baseEarnRate: number;
-  categoryMultipliers: Record<string, number>;
-  signupBonusPoints: number;
-}
-
-interface LinkedAccount {
-  institutionName: string;
-}
-
-interface CardWithRelations {
-  id: string;
-  lastFour: string | null;
-  nickname: string | null;
-  isActive: boolean;
-  createdAt: Date;
-  cardProduct: CardProduct | null;
-  linkedAccount: LinkedAccount | null;
-}
 
 export async function GET() {
   const session = await auth();
@@ -55,7 +30,7 @@ export async function GET() {
     });
 
     return Response.json({
-      cards: cards.map((card: CardWithRelations) => ({
+      cards: cards.map((card: typeof cards[number]) => ({
         id: card.id,
         lastFour: card.lastFour,
         nickname: card.nickname,
