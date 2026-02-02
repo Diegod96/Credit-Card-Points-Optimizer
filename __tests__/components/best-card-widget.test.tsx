@@ -48,8 +48,10 @@ describe('BestCardWidget', () => {
 
     render(<BestCardWidget />);
     expect(screen.getByText('Best Card to Use')).toBeInTheDocument();
-    expect(screen.getByText('Dining')).toBeInTheDocument();
-    expect(screen.getByText('Amex Gold')).toBeInTheDocument();
-    expect(screen.getByText('4x')).toBeInTheDocument();
+    expect(screen.getByText(/Dining/)).toBeInTheDocument();
+    expect(screen.getByText(/Groceries/)).toBeInTheDocument();
+    // Multiple cards may have the same name
+    expect(screen.getAllByText('Amex Gold')).toHaveLength(2);
+    expect(screen.getAllByText('4x')).toHaveLength(2);
   });
 });
