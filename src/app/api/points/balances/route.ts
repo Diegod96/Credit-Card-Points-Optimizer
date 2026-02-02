@@ -9,6 +9,15 @@ const ECOSYSTEM_LABELS: Record<string, string> = {
   CASHBACK: 'Cash Back',
 };
 
+interface PointsBalance {
+  id: string;
+  ecosystem: string;
+  balance: bigint;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export async function GET() {
   const session = await auth();
   
@@ -24,7 +33,7 @@ export async function GET() {
     });
 
     // Calculate month-over-month change (simplified - would need historical data in production)
-    const formattedBalances = balances.map(balance => {
+    const formattedBalances = balances.map((balance: PointsBalance) => {
       const lastMonth = new Date();
       lastMonth.setMonth(lastMonth.getMonth() - 1);
       

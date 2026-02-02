@@ -2,6 +2,40 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
 
+interface Card {
+  id: string;
+  lastFour: string | null;
+  nickname: string | null;
+  cardProduct: {
+    name: string;
+  } | null;
+  linkedAccount: {
+    institutionName: string;
+  } | null;
+}
+
+interface CardSummary {
+  cardId: string;
+  _sum: {
+    amount: number | null;
+    pointsEarned: number | null;
+  };
+  _count: {
+    id: number;
+  };
+}
+
+interface CategorySummary {
+  category: string;
+  _sum: {
+    amount: number | null;
+    pointsEarned: number | null;
+  };
+  _count: {
+    id: number;
+  };
+}
+
 export async function GET(request: Request) {
   const session = await auth();
   if (!session?.user?.id) {
@@ -92,8 +126,8 @@ export async function GET(request: Request) {
       },
     });
 
-    const cardSummaryWithDetails = cardSummary.map((summary) => {
-      const card = cards.find((c) => c.id === summary.cardId);
+    const cardSummaryWithDetails = cardSummary.map((summary: CardSummary) => {
+      const card = cards.find((c: Card) => c.id === summary.cardId);
       return {
         cardId: summary.cardId,
         cardName: card?.cardProduct?.name || card?.nickname || 'Unknown Card',
@@ -107,7 +141,7 @@ export async function GET(request: Request) {
 
     return Response.json({
       data: {
-        byCategory: categorySummary.map((cat) => ({
+        byCategory: categorySummary.map((cat: CategorySummary) => ({
           category: cat.category,
           totalSpend: cat._sum.amount || 0,
           totalPoints: cat._sum.pointsEarned || 0,
