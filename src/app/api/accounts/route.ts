@@ -2,6 +2,17 @@ import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { plaidClient } from '@/lib/plaid';
 
+interface LinkedAccount {
+  id: string;
+  institutionName: string;
+  institutionId: string;
+  status: string;
+  lastSyncAt: Date | null;
+  plaidAccessToken: string;
+  _count: { cards: number };
+  createdAt: Date;
+}
+
 export async function GET() {
   const session = await auth();
   if (!session?.user?.id) {
@@ -19,7 +30,7 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     });
 
-    const formattedAccounts = accounts.map((account) => ({
+    const formattedAccounts = accounts.map((account: LinkedAccount) => ({
       id: account.id,
       institutionName: account.institutionName,
       institutionId: account.institutionId,
